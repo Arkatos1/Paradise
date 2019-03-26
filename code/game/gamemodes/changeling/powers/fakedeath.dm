@@ -1,6 +1,7 @@
-/obj/effect/proc_holder/changeling/fakedeath
+/obj/effect/proc_holder/spell/changeling/fakedeath
 	name = "Regenerative Stasis"
 	desc = "We fall into a stasis, allowing us to regenerate."
+	action_icon_state = "fake_death"
 	chemical_cost = 15
 	dna_cost = 0
 	req_dna = 1
@@ -8,7 +9,7 @@
 	max_genetic_damage = 100
 
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
-/obj/effect/proc_holder/changeling/fakedeath/sting_action(var/mob/living/user)
+/obj/effect/proc_holder/spell/changeling/fakedeath/sting_action(var/mob/living/user)
 
 	to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
 	if(user.stat != DEAD)
@@ -26,12 +27,12 @@
 	feedback_add_details("changeling_powers","FD")
 	return 1
 
-/obj/effect/proc_holder/changeling/fakedeath/proc/ready_to_regenerate(mob/user)
+/obj/effect/proc_holder/spell/changeling/fakedeath/proc/ready_to_regenerate(mob/user)
 	if(user && user.mind && user.mind.changeling && user.mind.changeling.purchasedpowers)
 		to_chat(user, "<span class='notice'>We are ready to regenerate.</span>")
-		user.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/revive(null)
+		user.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/spell/changeling/revive(null)
 
-/obj/effect/proc_holder/changeling/fakedeath/can_sting(var/mob/user)
+/obj/effect/proc_holder/spell/changeling/fakedeath/can_sting(var/mob/user)
 	if(user.status_flags & FAKEDEATH)
 		to_chat(user, "<span class='warning'>We are already regenerating.</span>")
 		return

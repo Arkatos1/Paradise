@@ -1,11 +1,13 @@
-/obj/effect/proc_holder/changeling/revive
+/obj/effect/proc_holder/spell/changeling/revive
 	name = "Regenerate"
 	desc = "We regenerate, healing all damage from our form."
+	action_icon_state = "regenerate"
+	charge_max = 150
 	req_stat = DEAD
 	always_keep = 1
 
 //Revive from regenerative stasis
-/obj/effect/proc_holder/changeling/revive/sting_action(var/mob/living/carbon/user)
+/obj/effect/proc_holder/spell/changeling/revive/sting_action(var/mob/living/carbon/user)
 	user.setToxLoss(0, FALSE)
 	user.setOxyLoss(0, FALSE)
 	user.setCloneLoss(0, FALSE)

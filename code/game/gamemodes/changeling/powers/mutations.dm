@@ -9,7 +9,7 @@
 
 
 //Parent to shields and blades because muh copypasted code.
-/obj/effect/proc_holder/changeling/weapon
+/obj/effect/proc_holder/spell/changeling/weapon
 	name = "Organic Weapon"
 	desc = "Go tell a coder if you see this"
 	helptext = "Yell at coderbus"
@@ -21,7 +21,7 @@
 	var/weapon_type
 	var/weapon_name_simple
 
-/obj/effect/proc_holder/changeling/weapon/try_to_sting(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/spell/changeling/weapon/try_to_sting(var/mob/user, var/mob/target)
 	if(istype(user.l_hand, weapon_type)) //Not the nicest way to do it, but eh
 		qdel(user.l_hand)
 		if(!silent)
@@ -36,7 +36,7 @@
 		return
 	..(user, target)
 
-/obj/effect/proc_holder/changeling/weapon/sting_action(var/mob/user)
+/obj/effect/proc_holder/spell/changeling/weapon/sting_action(var/mob/user)
 	if(!user.drop_item())
 		to_chat(user, "The [user.get_active_hand()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!")
 		return
@@ -45,7 +45,7 @@
 	return W
 
 //Parent to space suits and armor.
-/obj/effect/proc_holder/changeling/suit
+/obj/effect/proc_holder/spell/changeling/suit
 	name = "Organic Suit"
 	desc = "Go tell a coder if you see this"
 	helptext = "Yell at coderbus"
@@ -60,7 +60,7 @@
 	var/recharge_slowdown = 0
 	var/blood_on_castoff = 0
 
-/obj/effect/proc_holder/changeling/suit/try_to_sting(var/mob/user, var/mob/target)
+/obj/effect/proc_holder/spell/changeling/suit/try_to_sting(var/mob/user, var/mob/target)
 	var/datum/changeling/changeling = user.mind.changeling
 	if(!ishuman(user) || !changeling)
 		return
@@ -84,7 +84,7 @@
 		return
 	..(H, target)
 
-/obj/effect/proc_holder/changeling/suit/sting_action(var/mob/living/carbon/human/user)
+/obj/effect/proc_holder/spell/changeling/suit/sting_action(var/mob/living/carbon/human/user)
 	if(!user.unEquip(user.wear_suit))
 		to_chat(user, "\the [user.wear_suit] is stuck to your body, you cannot grow a [suit_name_simple] over it!")
 		return
@@ -107,10 +107,11 @@
 /***************************************\
 |***************ARM BLADE***************|
 \***************************************/
-/obj/effect/proc_holder/changeling/weapon/arm_blade
+/obj/effect/proc_holder/spell/changeling/weapon/arm_blade
 	name = "Arm Blade"
 	desc = "We reform one of our arms into a deadly blade."
 	helptext = "Cannot be used while in lesser form."
+	action_icon_state = "armblade"
 	chemical_cost = 25
 	dna_cost = 2
 	genetic_damage = 10
@@ -177,12 +178,13 @@
 |***********COMBAT TENTACLES*************|
 \***************************************/
 
-/obj/effect/proc_holder/changeling/weapon/tentacle
+/obj/effect/proc_holder/spell/changeling/weapon/tentacle
 	name = "Tentacle"
 	desc = "We ready a tentacle to grab items or victims with."
 	helptext = "We can use it once to retrieve a distant item. If used on living creatures, the effect depends on the intent: \
 	Help will simply drag them closer, Disarm will grab whatever they are holding instead of them, Grab will put the victim in our hold after catching it, \
 	and Harm will stun it, and stab it if we are also holding a sharp weapon. Cannot be used while in lesser form."
+	action_icon_state = "tentacle"
 	chemical_cost = 10
 	dna_cost = 2
 	genetic_damage = 5
@@ -350,10 +352,11 @@
 /***************************************\
 |****************SHIELD*****************|
 \***************************************/
-/obj/effect/proc_holder/changeling/weapon/shield
+/obj/effect/proc_holder/spell/changeling/weapon/shield
 	name = "Organic Shield"
 	desc = "We reform one of our arms into a hard shield."
 	helptext = "Organic tissue cannot resist damage forever, the shield will break after it is hit too much. The more genomes we absorb, the stronger it is. Cannot be used while in lesser form."
+	action_icon_state = "organic_shield"
 	chemical_cost = 20
 	dna_cost = 1
 	genetic_damage = 12
@@ -363,7 +366,7 @@
 	weapon_type = /obj/item/shield/changeling
 	weapon_name_simple = "shield"
 
-/obj/effect/proc_holder/changeling/weapon/shield/sting_action(var/mob/user)
+/obj/effect/proc_holder/spell/changeling/weapon/shield/sting_action(var/mob/user)
 	var/datum/changeling/changeling = user.mind.changeling //So we can read the absorbedcount.
 	if(!changeling)
 		return
@@ -404,10 +407,11 @@
 /***************************************\
 |*********SPACE SUIT + HELMET***********|
 \***************************************/
-/obj/effect/proc_holder/changeling/suit/organic_space_suit
+/obj/effect/proc_holder/spell/changeling/suit/organic_space_suit
 	name = "Organic Space Suit"
 	desc = "We grow an organic suit to protect ourselves from space exposure."
 	helptext = "We must constantly repair our form to make it space-proof, reducing chemical production while we are protected. Retreating the suit damages our genomes. Cannot be used in lesser form."
+	action_icon_state = "organic_suit"
 	chemical_cost = 20
 	dna_cost = 2
 	genetic_damage = 8
@@ -451,10 +455,11 @@
 /***************************************\
 |*****************ARMOR*****************|
 \***************************************/
-/obj/effect/proc_holder/changeling/suit/armor
+/obj/effect/proc_holder/spell/changeling/suit/armor
 	name = "Chitinous Armor"
 	desc = "We turn our skin into tough chitin to protect us from damage."
 	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Retreating the armor damages our genomes. Cannot be used in lesser form."
+	action_icon_state = "chitinous_armor"
 	chemical_cost = 25
 	dna_cost = 2
 	genetic_damage = 11

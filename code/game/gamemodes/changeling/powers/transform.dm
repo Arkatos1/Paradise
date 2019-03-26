@@ -1,6 +1,8 @@
-/obj/effect/proc_holder/changeling/transform
+/obj/effect/proc_holder/spell/changeling/transform
 	name = "Transform"
 	desc = "We take on the appearance and voice of one we have absorbed."
+	action_icon_state = "transform"
+	charge_max = 50
 	chemical_cost = 5
 	dna_cost = 0
 	req_dna = 1
@@ -8,7 +10,7 @@
 	max_genetic_damage = 3
 
 //Change our DNA to that of somebody we've absorbed.
-/obj/effect/proc_holder/changeling/transform/sting_action(var/mob/living/carbon/human/user)
+/obj/effect/proc_holder/spell/changeling/transform/sting_action(var/mob/living/carbon/human/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/datum/dna/chosen_dna = changeling.select_dna("Select the target DNA: ", "Target DNA")
 

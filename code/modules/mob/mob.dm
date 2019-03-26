@@ -1017,7 +1017,7 @@ var/list/slot_equipment_priority = list( \
 
 
 /mob/proc/add_stings_to_statpanel(var/list/stings)
-	for(var/obj/effect/proc_holder/changeling/S in stings)
+	for(var/obj/effect/proc_holder/spell/changeling/S in stings)
 		if(S.chemical_cost >=0 && S.can_be_used_by(src))
 			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
 

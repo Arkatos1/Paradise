@@ -152,6 +152,9 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	if(changeling_mind in changelings)
 		changelings -= changeling_mind
 		changeling_mind.current.remove_changeling_powers()
+		for(var/obj/effect/proc_holder/spell/S in changeling_mind.spell_list)
+			if(S == src) continue
+			changeling_mind.RemoveSpell(S)
 		changeling_mind.memory = ""
 		changeling_mind.special_role = null
 		if(issilicon(changeling_mind.current))
@@ -175,6 +178,15 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	if(!istype(changeling_mob))
 		return
 	changeling_mob.make_changeling()
+	//Grants basic Changeling abilities
+	changeling_mob.powers += changeling_mob.mind.AddSpell(new /obj/effect/proc_holder/spell/changeling/evolution_menu(null))
+	changeling_mob.powers += changeling_mob.mind.AddSpell(new /obj/effect/proc_holder/spell/changeling/absorbDNA(null))
+	changeling_mob.powers += changeling_mob.mind.AddSpell(new /obj/effect/proc_holder/spell/changeling/revive(null))
+	changeling_mob.powers += changeling_mob.mind.AddSpell(new /obj/effect/proc_holder/spell/changeling/linglink(null))
+	changeling_mob.powers += changeling_mob.mind.AddSpell(new /obj/effect/proc_holder/spell/changeling/sting/extract_dna(null))
+	changeling_mob.powers += changeling_mob.mind.AddSpell(new /obj/effect/proc_holder/spell/changeling/transform(null))
+	changeling_mob.powers += changeling_mob.mind.AddSpell(new /obj/effect/proc_holder/spell/changeling/hivemind_upload(null))
+	changeling_mob.powers += changeling_mob.mind.AddSpell(new /obj/effect/proc_holder/spell/changeling/hivemind_download(null))
 
 /datum/game_mode/proc/auto_declare_completion_changeling()
 	if(changelings.len)
@@ -239,11 +251,12 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/islinking = 0
 	var/geneticpoints = 10
 	var/purchasedpowers = list()
+	var/powers = list()
 	var/mimicing = ""
 	var/canrespec = 0
 	var/changeling_speak = 0
 	var/datum/dna/chosen_dna
-	var/obj/effect/proc_holder/changeling/sting/chosen_sting
+	var/obj/effect/proc_holder/spell/changeling/sting/chosen_sting
 	var/regenerating = FALSE
 
 /datum/changeling/New(gender=FEMALE)
