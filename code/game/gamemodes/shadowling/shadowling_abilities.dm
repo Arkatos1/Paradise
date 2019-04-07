@@ -81,7 +81,7 @@
 		charge_counter = charge_max
 		return
 	to_chat(user, "<span class='shadowling'>You silently disable all nearby lights.</span>")
-	for(var/obj/structure/glowshroom/G in orange(2, user)) //Why the fuck was this in the loop below?
+	for(var/obj/structure/glowshroom/G in orange(3, user)) //Why the fuck was this in the loop below?
 		G.visible_message("<span class='warning'>\The [G] withers away!</span>")
 		qdel(G)
 	for(var/turf/T in targets)
@@ -174,10 +174,11 @@
 	name = "Icy Veins"
 	desc = "Instantly freezes the blood of nearby people, stunning them and causing burn damage."
 	panel = "Shadowling Abilities"
-	range = 5
-	charge_max = 250
+	range = 3
+	charge_max = 300
 	clothes_req = 0
 	action_icon_state = "icy_veins"
+	var/special_lights = list(/obj/item/flashlight/flare, /obj/item/flashlight/slime)
 
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze/cast(list/targets, mob/user = usr)
 	if(!shadowling_check(user))
@@ -201,7 +202,37 @@
 				M.bodytemperature -= 200 //Extreme amount of initial cold
 			if(M.reagents)
 				M.reagents.add_reagent("frostoil", 15) //Half of a cryosting
+			extinguishMob(M, TRUE)
+		for(var/obj/item/F in T.contents)
+			extinguishItem(F, TRUE)
 
+/obj/effect/proc_holder/spell/aoe_turf/proc/extinguishItem(obj/item/I, cold = FALSE) //Does not darken items held by mobs due to mobs having separate luminosity, use extinguishMob() or write your own proc.
+	var/blacklisted_lights = list(/obj/item/flashlight/flare, /obj/item/flashlight/slime)
+	if(istype(I, /obj/item/flashlight))
+		var/obj/item/flashlight/F = I
+		if(F.on)
+			if(cold)
+				if(is_type_in_list(F, blacklisted_lights))
+					F.visible_message("<span class='warning'>The sheer cold shatters [F]!</span>")
+					qdel(F)
+				else
+					return
+			if(is_type_in_list(I, blacklisted_lights))
+				I.visible_message("<span class='danger'>[I] dims slightly before scattering the shadows around it.</span>")
+				return F.brightness_on //Necessary because flashlights become 0-luminosity when held.  I don't make the rules of lightcode.
+			F.on = FALSE
+			F.update_brightness()
+	else if(istype(I, /obj/item/pda))
+		var/obj/item/pda/P = I
+		P.extinguish_light()
+	I.set_light(0)
+	return I.luminosity
+
+/obj/effect/proc_holder/spell/aoe_turf/proc/extinguishMob(mob/living/H, cold = FALSE)
+	for(var/obj/item/F in H)
+		if(cold)
+			extinguishItem(F, TRUE)
+		extinguishItem(F)
 
 /obj/effect/proc_holder/spell/targeted/enthrall //Turns a target into the shadowling's slave. This overrides all previous loyalties
 	name = "Enthrall"
