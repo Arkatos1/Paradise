@@ -95,7 +95,10 @@
 		update_icon()
 
 /obj/machinery/atmospherics/omni/attackby(var/obj/item/W as obj, var/mob/user as mob, params)
-	if(!istype(W, /obj/item/wrench))
+	if(istype(W, /obj/item/analyzer))
+		for(var/datum/omni_port/P in ports)
+			atmosanalyzer_scan(P.air, user)
+	else if(!istype(W, /obj/item/wrench))
 		return ..()
 
 	if(can_unwrench)

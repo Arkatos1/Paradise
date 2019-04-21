@@ -17,13 +17,6 @@
 			return
 		add_underlay(T, node, dir)
 
-/obj/machinery/atmospherics/unary/tank/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/analyzer))
-		atmosanalyzer_scan(air_contents, user)
-		return
-
-	return ..()
-
 /obj/machinery/atmospherics/unary/tank/air
 	name = "Pressure Tank (Air)"
 	icon_state = "air_map"

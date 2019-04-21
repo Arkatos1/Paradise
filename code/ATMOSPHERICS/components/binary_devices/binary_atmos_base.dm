@@ -151,3 +151,10 @@
 /obj/machinery/atmospherics/binary/process_atmos()
 	..()
 	return parent1 && parent2
+
+/obj/machinery/atmospherics/binary/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/analyzer))
+		atmosanalyzer_scan(air1, user)
+		atmosanalyzer_scan(air2, user)
+	else
+		return ..()

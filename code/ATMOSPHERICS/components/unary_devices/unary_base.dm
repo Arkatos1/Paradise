@@ -103,3 +103,9 @@
 /obj/machinery/atmospherics/unary/process_atmos()
 	..()
 	return parent
+
+/obj/machinery/atmospherics/unary/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/analyzer))
+		atmosanalyzer_scan(air_contents, user)
+	else
+		return ..()

@@ -210,3 +210,11 @@
 /obj/machinery/atmospherics/trinary/process_atmos()
 	..()
 	return parent1 && parent2 && parent3
+
+/obj/machinery/atmospherics/trinary/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/analyzer))
+		atmosanalyzer_scan(air1, user)
+		atmosanalyzer_scan(air2, user)
+		atmosanalyzer_scan(air3, user)
+	else
+		return ..()

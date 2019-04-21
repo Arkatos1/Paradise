@@ -145,8 +145,8 @@
 	else if(istype(A, /obj/machinery/portable_atmospherics/scrubber/huge))
 		var/obj/machinery/portable_atmospherics/scrubber/huge/T = A
 		pda.atmosanalyzer_scan(T.air_contents, user, T)
-	else if(istype(A, /obj/machinery/atmospherics/unary/tank))
-		var/obj/machinery/atmospherics/unary/tank/T = A
+	else if(istype(A, /obj/machinery/atmospherics/unary))
+		var/obj/machinery/atmospherics/unary/T = A
 		pda.atmosanalyzer_scan(T.air_contents, user, T)
 
 /datum/data/pda/utility/scanmode/notes
