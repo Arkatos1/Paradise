@@ -130,8 +130,8 @@
 				/obj/item/stack/tape_roll = 10,
 				/obj/item/storage/bag/plasticbag = 20,
 				/obj/item/caution = 10,
+				/obj/item/grenade/bananade = 3,
 				////////////////CONTRABAND STUFF//////////////////
-				/obj/item/grenade/clown_grenade = 3,
 				/obj/item/seeds/ambrosia/cruciatus = 3,
 				/obj/item/gun/projectile/automatic/pistol = 1,
 				/obj/item/ammo_box/magazine/m10mm = 4,
